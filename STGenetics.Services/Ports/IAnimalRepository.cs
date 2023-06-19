@@ -1,4 +1,5 @@
-﻿using STGenetics.Domain.Entities;
+﻿using STGenetics.Application.Models.Animal;
+using STGenetics.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,11 +62,13 @@ namespace STGenetics.Application.Ports
         /// <param name="animal"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A list with the animals filtered</returns>
-        public Task<List<Animal>> FilterAnimalAsync(Animal animal, CancellationToken cancellationToken);
+        public Task<List<Animal>> FilterAnimalAsync(AnimalFilterDto filter, CancellationToken cancellationToken);
 
 
 
         public Task<List<Animal>> Getand();
+
+        public Task<int> GetAnimalsQuantity(CancellationToken cancellationToken);
 
 
     }
