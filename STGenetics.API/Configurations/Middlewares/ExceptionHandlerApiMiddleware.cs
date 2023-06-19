@@ -1,4 +1,5 @@
 ﻿using STGenetics.Domain.Tools;
+using STGenetics.Domain.Tools.ApiResponses;
 using System.Text.Json;
 
 namespace STGenetics.API.Configurations.Middlewares

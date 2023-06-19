@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using STGenetics.Application.Tools.ValidationAttributes;
+using STGenetics.Domain.Tools.Validations;
 
 namespace STGenetics.Application.Models.Animal
 {
-    public class AnimalDto
+    public class AnimalDto : IAnimalValidation
     {        
         public int AnimalId { get; set; }
 
@@ -35,4 +36,6 @@ namespace STGenetics.Application.Models.Animal
         [Required]
         public bool Status { get; set; } = false;
     }
+
+    
 }

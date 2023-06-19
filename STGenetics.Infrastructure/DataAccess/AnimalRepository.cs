@@ -1,7 +1,9 @@
 ﻿using Dapper;
+using Microsoft.IdentityModel.Tokens;
 using STGenetics.Application.Models.Animal;
 using STGenetics.Application.Ports;
 using STGenetics.Domain.Entities;
+using STGenetics.Infrastructure.DataAccess.QueryBuilders;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +24,7 @@ namespace STGenetics.Infrastructure.DataAccess
             _context = context;
         }
 
-        public async Task<int> AddAnimalAsync(Animal animal, CancellationToken cancellationToken)
+        public async Task<int> AddAnimalAsync(Animal animal )
         {
             string sqlInsert = "INSERT INTO Animal ([Name], Breed, BirthDate, Sex, Price, [Status])";
             string sqlValues = " VALUES (@Name, @Breed, @BirthDate, @Sex, @Price, @Status);";
@@ -38,7 +40,7 @@ namespace STGenetics.Infrastructure.DataAccess
         }
 
 
-        public async Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids, CancellationToken cancellationToken)
+        public async Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids)
         {
             string sqlQuery = "SELECT AnimalId FROM Animal WHERE AnimalId IN @Ids";
 
@@ -49,20 +51,19 @@ namespace STGenetics.Infrastructure.DataAccess
             return animals.ToList();
         }
 
-        public async Task<bool> DeleteAnimalAsync(int Id, CancellationToken cancellationToken)
+        public async Task<bool> DeleteAnimalAsync(int Id)
         {
             string sqlQuery = "DELETE FROM Animal WHERE AnimalId = @Id";
 
             using var connection = _context.CreateConnection();
 
-            var animals = await connection.ExecuteAsync(sqlQuery, Id);
+            var affectedRows = await connection.ExecuteAsync(sqlQuery, Id);
 
-            if (animals > 0) return true; 
+            return affectedRows > 0 ;             
             
-            return false;
         }
 
-        public async Task<List<Animal>> FilterAnimalAsync(AnimalFilterDto filter, CancellationToken cancellationToken)
+        public async Task<List<Animal>> FilterAnimalAsync(AnimalFilterDto filter)
         {
             var filterQuery = QueryFilterBuilder.FilterBuilder(filter);
 
@@ -76,36 +77,81 @@ namespace STGenetics.Infrastructure.DataAccess
         }
 
 
-        public Task<bool> UpdateAnimalAsync(int Id, Animal animal, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAnimalAsync(int Id, AnimalUpdate updatedAnimal)
         {
-            throw new NotImplementedException();
-        }
+            var updateFields = new List<string>();
+            var parameters = new DynamicParameters();
 
-        public Task<bool> UpdateAnimalsStateAsync(List<int> Ids, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+            if (!string.IsNullOrEmpty(updatedAnimal.Name))
+            {
+                updateFields.Add("Name = @Name");
+                parameters.Add("@Name", updatedAnimal.Name);
+            }
+
+            if (!string.IsNullOrEmpty(updatedAnimal.Breed))
+            {
+                updateFields.Add("Breed = @Breed");
+                parameters.Add("@Breed", updatedAnimal.Breed);
+            }
+
+            if (updatedAnimal.BirthDate != default)
+            {
+                updateFields.Add("BirthDate = @BirthDate");
+                parameters.Add("@BirthDate", updatedAnimal.BirthDate);
+            }
+
+            if (!string.IsNullOrEmpty(updatedAnimal.Sex))
+            {
+                updateFields.Add("Sex = @Sex");
+                parameters.Add("@Sex", updatedAnimal.Sex);
+            }
+
+            if (updatedAnimal.Price != default)
+            {
+                updateFields.Add("Price = @Price");
+                parameters.Add("@Price", updatedAnimal.Price);
+            }
+
+            if (updatedAnimal.Status is not null)
+            {
+                updateFields.Add("Status = @Status");
+                parameters.Add("@Status", updatedAnimal.Status);
+            }
+
+            
+            var updateQuery = $"UPDATE Animal SET {string.Join(", ", updateFields)} WHERE AnimalId = @AnimalId";
+
+            parameters.Add("@AnimalId", Id);
 
 
-
-
-
-
-
-
-        //DELETE THIS AT THE END
-
-
-        public async Task<List<Animal>> Getand()
-        {
             using var connection = _context.CreateConnection();
 
-            var h = await connection.QueryAsync<Animal>("SELECT TOP(5) * FROM ANIMAL");
+            var affectedRows = await connection.ExecuteAsync(updateQuery, parameters);
 
-            return h.ToList();
+            return affectedRows > 0;
         }
 
-        public async Task<int> GetAnimalsQuantity(CancellationToken cancellationToken)
+        public async Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status)
+        {
+            string sqlQuery = "UPDATE Animal SET Status = @Status WHERE AnimalId IN @Ids";
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Status", status);
+            parameters.Add("@Ids", Ids);       
+
+
+            using var connection = _context.CreateConnection();
+
+            var affectedRows = await connection.ExecuteAsync(sqlQuery, parameters);
+
+            return affectedRows > 0 ;
+
+         
+        }
+
+
+        public async Task<int> GetAnimalsQuantity()
         {
             using var connection = _context.CreateConnection();
 
@@ -113,49 +159,9 @@ namespace STGenetics.Infrastructure.DataAccess
 
             return animalCount;
         }
-    }
-    
-    internal class QueryFilterBuilder {
 
-        public static (string, DynamicParameters) FilterBuilder(AnimalFilterDto filter) 
-        {
-            string sql = "SELECT * FROM Animal WHERE 1=1";
-            var parameters = new DynamicParameters();
-             
-            if (!string.IsNullOrEmpty(filter.Sex))
-            {
-                sql += " AND Sex = @Sex";
-                parameters.Add("@Sex", filter.Sex);
-            }
 
-            if (filter.AnimalId > 0)
-            {
-                sql += " AND AnimalId = @AnimalId";
-                parameters.Add("@AnimalId", filter.AnimalId.Value);
-            }
-
-            if (!string.IsNullOrEmpty(filter.Name))
-            {
-                sql += " AND Name = @Name";
-                parameters.Add("@Name", filter.Name);
-            }
-
-            if (filter.Status.HasValue)
-            {
-                sql += " AND Status = @Status";
-                parameters.Add("@Status", filter.Status.Value);
-            }
-
-            sql += " ORDER BY AnimalId";
-
-            sql += " OFFSET @Page ROWS FETCH NEXT @PageSize ROWS ONLY";
-            parameters.Add("@Page", (filter.Page-1) * filter.PageSize);
-            parameters.Add("@PageSize", filter.PageSize );
-            
-
-            return (sql, parameters);
-        } 
-    
+      
     }
 
    

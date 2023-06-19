@@ -1,4 +1,4 @@
-﻿namespace STGenetics.Domain.Tools
+﻿namespace STGenetics.Domain.Tools.ApiResponses
 {
     public enum Result
     {

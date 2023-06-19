@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using STGenetics.Application.Security;
-using STGenetics.Domain.Tools;
+using STGenetics.Domain.Tools.ApiResponses;
 
 namespace STGenetics.API.Controllers
 {
