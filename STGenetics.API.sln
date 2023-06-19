@@ -5,11 +5,17 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.API", "STGenetics.API\STGenetics.API.csproj", "{E266050A-6CF8-487B-8384-D0320D1278C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STGenetics.Application", "STGenetics.Services\STGenetics.Application.csproj", "{0E1941BE-79E5-4058-A7F8-14A6094F26D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.Application", "STGenetics.Services\STGenetics.Application.csproj", "{0E1941BE-79E5-4058-A7F8-14A6094F26D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STGenetics.Infrastructure", "STGenetics.Infrastructure\STGenetics.Infrastructure.csproj", "{FF3D8CE6-03DA-4B62-98F0-3A4644099E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.Infrastructure", "STGenetics.Infrastructure\STGenetics.Infrastructure.csproj", "{FF3D8CE6-03DA-4B62-98F0-3A4644099E5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STGenetics.Domain", "STGenetics.Domain\STGenetics.Domain.csproj", "{E1547933-98FD-432F-8999-0FDE33B31ABC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.Domain", "STGenetics.Domain\STGenetics.Domain.csproj", "{E1547933-98FD-432F-8999-0FDE33B31ABC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Queries", "SQL Queries", "{D3CADEFC-96FE-461D-A459-D6FB798FDD59}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Downloads\ERM STGenetics.png = ..\..\..\..\Downloads\ERM STGenetics.png
+		..\..\..\SQL Server Management Studio\STGenetics.sql = ..\..\..\SQL Server Management Studio\STGenetics.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

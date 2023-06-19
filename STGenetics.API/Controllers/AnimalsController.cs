@@ -15,7 +15,7 @@ namespace STGenetics.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    [Authorize]
+   // [Authorize]
     public class AnimalsController : ControllerBase
     {
         private readonly IAnimalService _animalService;

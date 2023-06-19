@@ -1,4 +1,4 @@
-# API de Búsqueda de Empleados
+# API For Management animals from STGenetics farms
 This API allows STGenetics clients to manage an animal, whether it is a cow or a bull. It enables creating, editing, deleting, and filtering an animal. Additionally, it allows for purchasing animals.
 
 ## Functionalities
