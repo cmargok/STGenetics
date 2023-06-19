@@ -11,11 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STGenetics.Domain", "STGenetics.Domain\STGenetics.Domain.csproj", "{E1547933-98FD-432F-8999-0FDE33B31ABC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Queries", "SQL Queries", "{D3CADEFC-96FE-461D-A459-D6FB798FDD59}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Downloads\ERM STGenetics.png = ..\..\..\..\Downloads\ERM STGenetics.png
-		..\..\..\SQL Server Management Studio\STGenetics.sql = ..\..\..\SQL Server Management Studio\STGenetics.sql
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQL Queries", "SQL Queries\SQL Queries.csproj", "{BFAF1C33-70FF-492A-B340-BC071EE13F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +35,10 @@ Global
 		{E1547933-98FD-432F-8999-0FDE33B31ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1547933-98FD-432F-8999-0FDE33B31ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1547933-98FD-432F-8999-0FDE33B31ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAF1C33-70FF-492A-B340-BC071EE13F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAF1C33-70FF-492A-B340-BC071EE13F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAF1C33-70FF-492A-B340-BC071EE13F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAF1C33-70FF-492A-B340-BC071EE13F5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
