@@ -42,7 +42,7 @@ namespace STGenetics.API.Controllers
         [HttpPost()]
         public async Task<IActionResult> AddAsync(AnimalDto newAnimal, CancellationToken cancellationToken)
         {
-            var AnimalId = await _animalService.AddAnimalAsync(newAnimal, cancellationToken);
+             var AnimalId = await _animalService.AddAnimalAsync(newAnimal, cancellationToken);
 
             var BadRresponse = Tools.CreateResponse("The Animal does not meet the basic validations.", Result.CannotBeCreated, 0);
 
