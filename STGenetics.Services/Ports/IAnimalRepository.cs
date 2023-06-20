@@ -15,7 +15,7 @@ namespace STGenetics.Application.Ports
         /// </summary>
         /// <param name="animal"></param>      
         /// <returns>Id of the animal if animal was createdd successfully</returns>
-        public Task<int> AddAnimalAsync(Animal animal );
+        public Task<int> AddAnimalAsync(Animal animal);
 
         /// <summary>
         /// Update an animal from the database
@@ -40,7 +40,7 @@ namespace STGenetics.Application.Ports
         /// <param name="Id"></param>
         /// <param name="animal"></param>
         /// <returns>A empty list if all the animals are active, or the ids for the animal who are not</returns>
-        public Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids);
+        public Task<List<Animal>> CheckAnimalAndRetrieveDataAsync(List<int> Ids);
 
 
         /// <summary>
@@ -66,5 +66,10 @@ namespace STGenetics.Application.Ports
         public Task<int> GetAnimalsQuantity();
 
 
+
     }
+
+     
 }
+
+    

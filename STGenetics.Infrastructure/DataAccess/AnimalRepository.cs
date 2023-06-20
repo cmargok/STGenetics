@@ -15,6 +15,7 @@ using System.Xml.Linq;
 
 namespace STGenetics.Infrastructure.DataAccess
 {
+
     public class AnimalRepository : IAnimalRepository
     {
         private readonly DapperContext _context;
@@ -40,13 +41,13 @@ namespace STGenetics.Infrastructure.DataAccess
         }
 
 
-        public async Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids)
+        public async Task<List<Animal>> CheckAnimalAndRetrieveDataAsync(List<int> Ids)
         {
-            string sqlQuery = "SELECT AnimalId FROM Animal WHERE AnimalId IN @Ids";
+            string sqlQuery = "SELECT AnimalId, Sex, Price FROM Animal WHERE AnimalId IN @Ids AND Status = 1";
 
             using var connection = _context.CreateConnection();
 
-            var animals = await connection.QueryAsync<int>(sqlQuery, Ids);
+            var animals = await connection.QueryAsync<Animal>(sqlQuery, Ids);
 
             return animals.ToList();
         }
@@ -59,8 +60,7 @@ namespace STGenetics.Infrastructure.DataAccess
 
             var affectedRows = await connection.ExecuteAsync(sqlQuery, new { Id });
 
-            return affectedRows > 0 ;             
-            
+            return affectedRows > 0 ;  
         }
 
         public async Task<List<Animal>> FilterAnimalAsync(AnimalFilterDto filter)

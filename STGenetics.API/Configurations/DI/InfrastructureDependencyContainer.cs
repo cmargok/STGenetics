@@ -42,9 +42,12 @@ namespace STGenetics.Api.DI
 
             Services.Configure<JwtSettings>(config.GetSection("JwtSettings"));
 
+            Services.Configure<OrderSettings>(config.GetSection("OrderSettings"));
+
             Services.AddScoped<ITokenService, TokenService>();
 
-
+            Services.AddScoped<IOrderService, OrderService>();
+            Services.AddScoped<IOrderRepository, OrderRepository>();
 
             return Services;
         }

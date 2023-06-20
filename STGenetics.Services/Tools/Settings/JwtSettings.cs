@@ -17,5 +17,5 @@ namespace STGenetics.Application.Tools.Settings
 
     }
 
-   
+
 }

@@ -70,12 +70,12 @@ namespace STGenetics.Application.Services
             return update;
         }
 
-        public  async Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids)
+        public  async Task<List<Animal>> GetAnimalsInfoAsync(List<int> Ids)
         {
 
             if (Ids.Any(i => i <= 0)) return default!;
 
-            var result = await _animalRepository.CheckAnimalAvalaibilityAsync(Ids);
+            var result = await _animalRepository.CheckAnimalAndRetrieveDataAsync(Ids);
 
             return result;
 

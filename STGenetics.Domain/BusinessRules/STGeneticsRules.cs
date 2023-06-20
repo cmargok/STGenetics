@@ -1,37 +1,78 @@
-﻿using System;
+﻿using STGenetics.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace STGenetics.Domain.BusinessRules
 {
     public class STGeneticsRules
     {
 
-        public static decimal ApplyQuantityDiscount(decimal price) 
+
+        public TransactionToOrder ApplyQuantityDiscount(TransactionToOrder toOrder) 
         {
-            int Discount = 5;
+            decimal BullTotalPrice = 0;            
 
-            price = (price / 100) * 100 - Discount;
+            var BullsCount = toOrder.Animals!.Count(c => c.Sex == "MALE");
 
-            return price;
+            BullTotalPrice = toOrder.Animals!.Where(c => c.Sex == "MALE").Sum(c => c.Price);
+
+            if (BullsCount > 50)
+            {  
+                BullTotalPrice = ApplyDiscount(BullTotalPrice, 5);
+
+                toOrder.Discounts.Add("BullDiscount>50, 5%");
+            }
+            
+
+            decimal CowTotalPrice = 0;
+
+            var CowsCount = toOrder.Animals!.Count(c => c.Sex == "FEMALE");
+
+            CowTotalPrice = toOrder.Animals!.Where(c => c.Sex == "FEMALE").Sum(c => c.Price);
+
+            if (CowsCount > 50)
+            {
+
+                CowTotalPrice = ApplyDiscount(CowTotalPrice, 5);
+
+                toOrder.Discounts.Add("CowDiscount>50, 5%");
+            }            
+
+            toOrder.Total = BullTotalPrice + CowTotalPrice;
+
+            return toOrder;
         }
 
 
 
-        public static decimal Apply200AnimalsDiscount(decimal total)
-        {
-            int Discount = 3;
 
-            total = (total / 100) * 100 - Discount;
+        private decimal ApplyDiscount(decimal total, int DiscountPorcent) 
+        {           
 
-            return total;
+            var Discount = (total / 100) * (100 - DiscountPorcent);
+
+            return Discount;
         }
 
-        public static decimal Apply3000yDiscount()
+        public TransactionToOrder Apply200AnimalsDiscount(TransactionToOrder toOrder)
         {
-            return 1000;
+
+            if (toOrder.Animals!.Count > 200) 
+            {
+                toOrder.Total = ApplyDiscount(toOrder.Total, 3);
+
+                toOrder.Discounts.Add("Buy>200, 3%");
+            }
+            return toOrder;
+        }
+
+        public bool Apply300AnimalsDiscount(TransactionToOrder toOrder)
+        {
+            return toOrder.Animals!.Count > 300;         
 
         }
 

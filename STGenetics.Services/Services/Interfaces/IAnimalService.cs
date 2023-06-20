@@ -8,7 +8,7 @@ namespace STGenetics.Application.Services.Interfaces
         public Task<int> AddAnimalAsync(AnimalDto newAnimal);
         public Task<bool> UpdateAnimalAsync(int Id, AnimalUpdateDto animal);
         public Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status);
-        public Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids);
+        public Task<List<Animal>> GetAnimalsInfoAsync(List<int> Ids);
         public Task<bool> DeleteAnimalAsync(int Id);
         public Task<AnimalsFilteredDto> GetAnimalsFilteredAsync(int? AnimalId, string? Name, string? Sex, bool? Status, int? PageSize, int? Page);
 

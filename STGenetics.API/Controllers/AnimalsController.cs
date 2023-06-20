@@ -50,8 +50,8 @@ namespace STGenetics.API.Controllers
 
             if (AnimalId == 0) {
 
-                var BadRresponse = Tools.CreateResponse("The Animal does not meet the basic validations.", Result.CannotBeCreated, 0);
-                return BadRequest(BadRresponse);
+                var BadResponse = Tools.CreateResponse("The Animal does not meet the basic validations.", Result.CannotBeCreated, 0);
+                return BadRequest(BadResponse);
             }
 
             var response = Tools.CreateResponse(AnimalId, Result.Success, 1);

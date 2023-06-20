@@ -11,7 +11,6 @@ namespace STGenetics.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
-
     [AllowAnonymous]
     public class TokenController : ControllerBase
     {
