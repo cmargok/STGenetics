@@ -8,6 +8,7 @@ namespace STGenetics.Domain.Entities
         public int OrderId { get; set; }
 
         [Required]
+        [StringLength(50)]
         public string ClientName { get; set; } = string.Empty;
 
         [Required]
@@ -18,12 +19,12 @@ namespace STGenetics.Domain.Entities
         public DateTime PurchaseDate { get; set; }
 
         [Required]
+        [StringLength(500)]
         public string DiscountsApplied { get; set; } = string.Empty;
 
         [Required]
-
         [Column(TypeName = "decimal(10,2)")]
-        public decimal Freigth { get; set; }
+        public decimal Freight { get; set; }
 
         public bool Paid { get; set; } = false;
 

@@ -61,10 +61,9 @@ namespace STGenetics.Application.Services
 
                 var OrderEntity = BuildOrder(transaction);
 
-
                 OrderId = await _orderRepository.SaveOrder(OrderEntity, orderIn.AnimalsIds);
 
-                orderOut.Id = OrderId;
+                orderOut.OrderId = OrderId;
                 orderOut.PurchaseAmount = OrderEntity.Total;
 
                 return (orderOut,"");
@@ -81,12 +80,12 @@ namespace STGenetics.Application.Services
         }
 
 
-        private Order BuildOrder(TransactionToOrder toOrder) 
+        private static Order BuildOrder(TransactionToOrder toOrder) 
         {
             return new Order()
             {
                 ClientName = toOrder.ClientName,
-                Freigth = toOrder.Freigth,
+                Freight = toOrder.Freigth,
                 Paid = false,
                 PurchaseDate= toOrder.PurchaseDate,
                 DiscountsApplied = string.Join(" ,", toOrder.Discounts),
@@ -103,22 +102,21 @@ namespace STGenetics.Application.Services
 
         private TransactionToOrder ImplementingBusinessRules(TransactionToOrder toOrder) 
         {
-            var Rules = new STGeneticsRules();
+            toOrder = STGeneticsRules.ApplyQuantityDiscount(toOrder);
 
-            toOrder = Rules.ApplyQuantityDiscount(toOrder);
+            toOrder = STGeneticsRules.Apply200AnimalsDiscount(toOrder);
 
-            toOrder = Rules.Apply200AnimalsDiscount(toOrder);
-
-            if (!Rules.Apply300AnimalsDiscount(toOrder)) 
+            if (!STGeneticsRules.Apply300AnimalsDiscount(toOrder)) 
             {
                 toOrder.Total += _orderSettings.FreightCost;
                 toOrder.Freigth = _orderSettings.FreightCost;
+                toOrder.Discounts.Add("Buy>300, Freight for free;");
             }
             return toOrder;
         }
 
 
-        private bool VerifyOrderIn(OrderIn orderIn) {
+        private static bool VerifyOrderIn(OrderIn orderIn) {
 
             orderIn.ThrowIfNull();
 
@@ -130,7 +128,7 @@ namespace STGenetics.Application.Services
         }
 
 
-        private bool VerifyDuplicates(List<int> ids)
+        private static bool VerifyDuplicates(List<int> ids)
         {
             return ids.GroupBy(x => x).Any(g => g.Count() > 1);
         }

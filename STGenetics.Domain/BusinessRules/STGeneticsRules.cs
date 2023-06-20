@@ -12,7 +12,7 @@ namespace STGenetics.Domain.BusinessRules
     {
 
 
-        public TransactionToOrder ApplyQuantityDiscount(TransactionToOrder toOrder) 
+        public static TransactionToOrder ApplyQuantityDiscount(TransactionToOrder toOrder) 
         {
             decimal BullTotalPrice = 0;            
 
@@ -23,10 +23,8 @@ namespace STGenetics.Domain.BusinessRules
             if (BullsCount > 50)
             {  
                 BullTotalPrice = ApplyDiscount(BullTotalPrice, 5);
-
-                toOrder.Discounts.Add("BullDiscount>50, 5%");
-            }
-            
+                toOrder.Discounts.Add("BullDiscount>50, 5%;");
+            }            
 
             decimal CowTotalPrice = 0;
 
@@ -36,10 +34,8 @@ namespace STGenetics.Domain.BusinessRules
 
             if (CowsCount > 50)
             {
-
                 CowTotalPrice = ApplyDiscount(CowTotalPrice, 5);
-
-                toOrder.Discounts.Add("CowDiscount>50, 5%");
+                toOrder.Discounts.Add("CowDiscount>50, 5%;");
             }            
 
             toOrder.Total = BullTotalPrice + CowTotalPrice;
@@ -50,7 +46,7 @@ namespace STGenetics.Domain.BusinessRules
 
 
 
-        private decimal ApplyDiscount(decimal total, int DiscountPorcent) 
+        private static decimal ApplyDiscount(decimal total, int DiscountPorcent) 
         {           
 
             var Discount = (total / 100) * (100 - DiscountPorcent);
@@ -58,19 +54,19 @@ namespace STGenetics.Domain.BusinessRules
             return Discount;
         }
 
-        public TransactionToOrder Apply200AnimalsDiscount(TransactionToOrder toOrder)
+        public static TransactionToOrder Apply200AnimalsDiscount(TransactionToOrder toOrder)
         {
 
             if (toOrder.Animals!.Count > 200) 
             {
                 toOrder.Total = ApplyDiscount(toOrder.Total, 3);
 
-                toOrder.Discounts.Add("Buy>200, 3%");
+                toOrder.Discounts.Add("Buy>200, 3%;");
             }
             return toOrder;
         }
 
-        public bool Apply300AnimalsDiscount(TransactionToOrder toOrder)
+        public static bool Apply300AnimalsDiscount(TransactionToOrder toOrder)
         {
             return toOrder.Animals!.Count > 300;         
 

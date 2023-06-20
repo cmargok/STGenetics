@@ -47,7 +47,7 @@ namespace STGenetics.Infrastructure.DataAccess
 
             using var connection = _context.CreateConnection();
 
-            var animals = await connection.QueryAsync<Animal>(sqlQuery, Ids);
+            var animals = await connection.QueryAsync<Animal>(sqlQuery, new { Ids });
 
             return animals.ToList();
         }
@@ -138,8 +138,7 @@ namespace STGenetics.Infrastructure.DataAccess
             var parameters = new DynamicParameters();
 
             parameters.Add("@Status", status);
-            parameters.Add("@Ids", Ids);       
-
+            parameters.Add("@Ids", Ids);    
 
             using var connection = _context.CreateConnection();
 

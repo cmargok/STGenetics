@@ -44,15 +44,15 @@ namespace STGenetics.Infrastructure.DataAccess
 
         private async Task<int> SaveOrderIntoTableAsync(Order order) 
         {
-            string sqlInsert = "INSERT INTO Order (ClientName, Total, PurchaseDate, DiscountsApplied, freight, Paid)";
-            string sqlValues = " VALUES (@ClientName, @Total, @PurchaseDate, @DiscountsApplied, @freight, @Paid);";
+            string sqlInsert = "INSERT INTO [Order] (ClientName, Total, PurchaseDate, DiscountsApplied, Freight, Paid)";
+            string sqlValues = " VALUES (@ClientName, @Total, @PurchaseDate, @DiscountsApplied, @Freight, @Paid);";
             string sqlSelectId = "SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             using var connection = _context.CreateConnection();
 
             string sqlQuery = sqlInsert + sqlValues + sqlSelectId;
 
-            int id = await connection.ExecuteScalarAsync<int>(sqlQuery, order);
+            int id = await connection.ExecuteScalarAsync<int>(sqlQuery,order);
 
             return id;
         }
@@ -61,7 +61,7 @@ namespace STGenetics.Infrastructure.DataAccess
         {            
             string sqlQuery = "INSERT INTO OrdenAnimal (OrdenId, AnimalId) VALUES (@OrderId, @AnimalId)";
 
-            var parameters = animalIds.Select(animalId => new { OrderId = OrderId, AnimalId = animalId });
+            var parameters = animalIds.Select(animalId => new { OrderId, AnimalId = animalId });
 
             using var connection = _context.CreateConnection();
 

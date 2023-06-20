@@ -61,7 +61,8 @@ namespace STGenetics.Application.Services
         }
 
 
-        public async Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status) {
+        public async Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status) 
+        {
 
             if (Ids.Any(i => i <= 0) ) return false;
 
