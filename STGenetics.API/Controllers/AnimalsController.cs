@@ -19,7 +19,7 @@ namespace STGenetics.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    // [Authorize]
+    [Authorize]
     public class AnimalsController : ControllerBase
     {
         private readonly IAnimalService _animalService;
@@ -33,6 +33,7 @@ namespace STGenetics.API.Controllers
         {
             _animalService = animalService;
         }
+
 
 
         /// <summary>
@@ -60,6 +61,8 @@ namespace STGenetics.API.Controllers
         }
 
 
+
+
         /// <summary>
         /// Update an animal by the fiven id and its information
         /// </summary>
@@ -84,6 +87,9 @@ namespace STGenetics.API.Controllers
 
             return Ok(response);
         }
+
+
+
 
 
         /// <summary>

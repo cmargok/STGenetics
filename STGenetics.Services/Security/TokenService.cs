@@ -31,12 +31,10 @@ namespace STGenetics.Application.Security
 
         public Task<string> GetToken()
         {
-            //var secret = Base64UrlEncoder.DecodeBytes(_configuration["JwtSettings:Key"]);
             var secret = Encoding.UTF8.GetBytes(_jwtSettings.Key);
             var securityKey = new SymmetricSecurityKey(secret);
 
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
 
             var claims = new List<Claim>()
             {
@@ -45,9 +43,7 @@ namespace STGenetics.Application.Security
                 new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("Id", "1"),
                 new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Name, "Cmargok"),
-
             };
-
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,

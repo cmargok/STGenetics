@@ -19,7 +19,7 @@ namespace STGenetics.Api.DI
     /// <summary>
     /// Dependency Container static class
     /// </summary>
-    public static class InfrastructureDependencyContainer
+    public static class DependencyContainer
     {
         /// <summary>
         /// Register the Collection services created by the user

@@ -8,10 +8,7 @@ using STGenetics.Domain.Entities;
 using STGenetics.Domain.Tools;
 namespace STGenetics.Application.Services
 {
-    public interface IOrderService
-    {
-        public  Task<(OrderOut, string)> ProcessOrder(OrderIn orderIn);
-    }
+   
     public class OrderService : IOrderService
     {
         private readonly IAnimalService _animalService;
@@ -71,6 +68,8 @@ namespace STGenetics.Application.Services
             }
             catch (Exception)
             {
+
+                //we must apply a safe rollback
                 await _animalService.UpdateAnimalsStateAsync(orderIn.AnimalsIds, true);
 
                 if(OrderId > 0)  await _orderRepository.InactiveOrder(OrderId);

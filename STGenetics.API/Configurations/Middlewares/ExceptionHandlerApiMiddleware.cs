@@ -10,16 +10,14 @@ namespace STGenetics.API.Configurations.Middlewares
     public class ExceptionHandlerApiMiddleware
     {
         private readonly RequestDelegate _next;
-        //private readonly IApiLogger _logger;
 
         /// <summary>
         /// Exception Handler middleware Constructor
         /// </summary>
         /// <param name="next"></param>
-        public ExceptionHandlerApiMiddleware(RequestDelegate next/*, IApiLogger logger*/)
+        public ExceptionHandlerApiMiddleware(RequestDelegate next)
         {
             _next = next;
-           // _logger = logger;
         }
 
         /// <summary>
@@ -35,9 +33,7 @@ namespace STGenetics.API.Configurations.Middlewares
                 await _next(context);
             }
             catch (Exception ex)
-            {
-              //  _logger.LoggingError(ex, ex.Message);
-               // _logger.LoggingInformation($"{ex.Source} - ERROR");
+            {              
                 await HandleExceptionAsync(context, ex);
             }
         }

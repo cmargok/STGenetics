@@ -37,9 +37,6 @@ namespace STGenetics.Infrastructure.DataAccess
             return affectedRows > 0;
         }
 
-       
-
-
 
 
         private async Task<int> SaveOrderIntoTableAsync(Order order) 

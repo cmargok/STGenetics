@@ -52,6 +52,7 @@ namespace STGenetics.Infrastructure.DataAccess
             return animals.ToList();
         }
 
+
         public async Task<bool> DeleteAnimalAsync(int Id)
         {
             string sqlQuery = "DELETE FROM Animal WHERE AnimalId = @Id";
@@ -117,12 +118,10 @@ namespace STGenetics.Infrastructure.DataAccess
                 updateFields.Add("Status = @Status");
                 parameters.Add("@Status", updatedAnimal.Status);
             }
-
             
             var updateQuery = $"UPDATE Animal SET {string.Join(", ", updateFields)} WHERE AnimalId = @AnimalId";
 
             parameters.Add("@AnimalId", Id);
-
 
             using var connection = _context.CreateConnection();
 
@@ -144,9 +143,7 @@ namespace STGenetics.Infrastructure.DataAccess
 
             var affectedRows = await connection.ExecuteAsync(sqlQuery, parameters);
 
-            return affectedRows > 0 ;
-
-         
+            return affectedRows > 0 ;         
         }
 
 
@@ -158,8 +155,6 @@ namespace STGenetics.Infrastructure.DataAccess
 
             return animalCount;
         }
-
-
       
     }
 

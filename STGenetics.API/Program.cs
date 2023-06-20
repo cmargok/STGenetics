@@ -13,9 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterServices(builder.Configuration);
 
-
-
-
 //===================== Swagger =========================
 
 builder.Services.AddSwaggerGen(options =>
@@ -34,8 +31,8 @@ builder.Services.AddSwaggerGen(options =>
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Description = "@JWT Authorization header using the Bearer Scheme." +
-                        "Ingrese 'Bearer [space] and then your token in the text input below." +
-                        "Ejemplo = 'Bearer eyJhbGciOJSJsfs1NiIsIn445cCI6IkpXVCJ9.eyJWZXJza...'",
+                        "Add 'Bearer [space] and then your token in the text input below." +
+                        "Example = 'Bearer eyJhbGciOJSJsfs1NiIsIn445cCI6IkpXVCJ9.eyJWZXJza...'",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -51,14 +48,12 @@ builder.Services.AddSwaggerGen(options =>
                     {
                         Type = ReferenceType.SecurityScheme,
                         Id = JwtBearerDefaults.AuthenticationScheme,
-
                     },
                     Name = JwtBearerDefaults.AuthenticationScheme,
                     In = ParameterLocation.Header,
                     Scheme = "0auth2"
                 },
                 new List<string>()
-
             }
     });
 
@@ -70,7 +65,6 @@ builder.Services.AddSwaggerGen(options =>
 
 
 //===================== Cors =========================
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -81,7 +75,6 @@ builder.Services.AddCors(options =>
 
 
 //===================== JWT =========================
-
 builder.Services.AddAuthentication(
     options =>
     {
@@ -110,13 +103,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
-
-
-
-
-
-
 
 
 // Configure the HTTP request pipeline.
@@ -126,12 +114,14 @@ app.UseSwaggerUI(sw =>
 {
     sw.DocumentTitle = "STGenetics Animals Api";
 });
+
 //==================== MiddleWares ===============================
 app.UseMiddleware<ExceptionHandlerApiMiddleware>();
 
 app.UseMiddleware<OperationCanceledMiddleware>();
 
 app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

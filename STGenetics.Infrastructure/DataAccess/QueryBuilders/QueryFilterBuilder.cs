@@ -38,9 +38,10 @@ namespace STGenetics.Infrastructure.DataAccess.QueryBuilders
             sql += " ORDER BY AnimalId";
 
             sql += " OFFSET @Page ROWS FETCH NEXT @PageSize ROWS ONLY";
-            parameters.Add("@Page", (filter.Page - 1) * filter.PageSize);
-            parameters.Add("@PageSize", filter.PageSize);
 
+            parameters.Add("@Page", (filter.Page - 1) * filter.PageSize);
+
+            parameters.Add("@PageSize", filter.PageSize);
 
             return (sql, parameters);
         }

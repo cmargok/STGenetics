@@ -6,6 +6,8 @@ using STGenetics.Application.Services;
 using STGenetics.Application.Tools.Settings;
 using STGenetics.Domain.Tools.ApiResponses;
 using STGenetics.Domain.Tools;
+using STGenetics.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace STGenetics.API.Controllers
 {
@@ -16,7 +18,7 @@ namespace STGenetics.API.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    // [Authorize]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
 

@@ -7,21 +7,18 @@
     public class OperationCanceledMiddleware
     {
         private readonly RequestDelegate _next;
-       // private readonly IApiLogger _logger;
 
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="next"></param>
-        public OperationCanceledMiddleware(RequestDelegate next/*, IApiLogger logger*/)
+        public OperationCanceledMiddleware(RequestDelegate next)
         {
             _next = next;
-           // _logger = logger;
         }
 
-        /// <summary>
-        /// 
+        /// <summary>      
         /// 
         /// </summary>
         /// <param name="context"></param>
@@ -34,7 +31,6 @@
             }
             catch (OperationCanceledException)
             {
-               // _logger.LoggingInformation("Request was cancelled - 409");
                 context.Response.StatusCode = 409;
             }
         }

@@ -11,6 +11,5 @@ namespace STGenetics.Application.Models.Order
     {
         public string ClientName { get; set; } = String.Empty;
         public List<int> AnimalsIds { get; set; } = new List<int>();
-
     }
 }

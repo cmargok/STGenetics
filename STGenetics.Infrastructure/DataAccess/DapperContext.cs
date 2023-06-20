@@ -17,6 +17,7 @@ namespace STGenetics.Infrastructure.DataAccess
             _connectionString = connectionString;
         }
 
-        public IDbConnection CreateConnection() => new SqlConnection(_connectionString);
+        public IDbConnection CreateConnection() 
+                        => new SqlConnection(_connectionString);
     }
 }

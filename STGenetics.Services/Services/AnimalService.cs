@@ -51,47 +51,41 @@ namespace STGenetics.Application.Services
                 Status = UpdateAnimal.Status ,
             };
 
-
             if (!AnimalValidation(animal) || Id <= 0) return false;
 
             var update = await _animalRepository.UpdateAnimalAsync(Id, animal);
 
             return update;
-
         }
 
 
         public async Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status) 
         {
-
             if (Ids.Any(i => i <= 0) ) return false;
 
             var update = await _animalRepository.UpdateAnimalsStateAsync(Ids, status);
 
-            return update;
+            return update;      
         }
+
 
         public  async Task<List<Animal>> GetAnimalsInfoAsync(List<int> Ids)
         {
-
             if (Ids.Any(i => i <= 0)) return default!;
 
             var result = await _animalRepository.CheckAnimalAndRetrieveDataAsync(Ids);
 
             return result;
-
-
         }
 
 
-        public async Task<bool> DeleteAnimalAsync(int Id) {
-
+        public async Task<bool> DeleteAnimalAsync(int Id) 
+        {
             if (Id <= 0) return false;
 
             var result = await _animalRepository.DeleteAnimalAsync(Id);
 
             return result;
-
         }
 
 
@@ -129,8 +123,8 @@ namespace STGenetics.Application.Services
 
             if (animals is not null) 
             {
-                animalsDto = animals.Select(
-                    o => new AnimalDto
+                animalsDto = animals
+                    .Select(o => new AnimalDto
                     {
                         AnimalId = o.AnimalId,
                         Name = o.Name,
@@ -142,8 +136,6 @@ namespace STGenetics.Application.Services
 
                     }).ToList();
             }
-
-
 
             return new AnimalsFilteredDto { 
                 Animals =  animalsDto,
@@ -158,7 +150,6 @@ namespace STGenetics.Application.Services
 
 
 
-        #region
         private static bool AnimalValidation<T>(T Animal) where T : IAnimalValidation 
         {
             Animal.ThrowIfNull();   
@@ -169,9 +160,6 @@ namespace STGenetics.Application.Services
 
             return true;
         }
-
-
-
-        #endregion
+       
     }
 }

@@ -10,8 +10,6 @@ namespace STGenetics.Domain.BusinessRules
 {
     public class STGeneticsRules
     {
-
-
         public static TransactionToOrder ApplyQuantityDiscount(TransactionToOrder toOrder) 
         {
             decimal BullTotalPrice = 0;            
@@ -43,20 +41,8 @@ namespace STGenetics.Domain.BusinessRules
             return toOrder;
         }
 
-
-
-
-        private static decimal ApplyDiscount(decimal total, int DiscountPorcent) 
-        {           
-
-            var Discount = (total / 100) * (100 - DiscountPorcent);
-
-            return Discount;
-        }
-
         public static TransactionToOrder Apply200AnimalsDiscount(TransactionToOrder toOrder)
         {
-
             if (toOrder.Animals!.Count > 200) 
             {
                 toOrder.Total = ApplyDiscount(toOrder.Total, 3);
@@ -68,12 +54,11 @@ namespace STGenetics.Domain.BusinessRules
 
         public static bool Apply300AnimalsDiscount(TransactionToOrder toOrder)
         {
-            return toOrder.Animals!.Count > 300;         
-
+            return toOrder.Animals!.Count > 300; 
         }
 
-       
 
+        private static decimal ApplyDiscount(decimal total, int DiscountPorcent) => (total / 100) * (100 - DiscountPorcent);
 
     }
 }
