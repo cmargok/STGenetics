@@ -6,7 +6,7 @@ namespace STGenetics.Application.Services.Interfaces
     public interface IAnimalService
     {
         public Task<int> AddAnimalAsync(AnimalDto newAnimal);
-        public Task<bool> UpdateAnimalAsync(int Id, AnimalUpdate animal);
+        public Task<bool> UpdateAnimalAsync(int Id, AnimalUpdateDto animal);
         public Task<bool> UpdateAnimalsStateAsync(List<int> Ids, bool status);
         public Task<List<int>> CheckAnimalAvalaibilityAsync(List<int> Ids);
         public Task<bool> DeleteAnimalAsync(int Id);

@@ -7,10 +7,10 @@ namespace STGenetics.Application.Models.Animal
         public int? AnimalId { get; set; }
 
         [StringLength(50)]
-        public string? Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
         [StringLength(6)]
-        public string? Sex { get; set; } = string.Empty;
+        public string? Sex { get; set; }
 
         public bool? Status { get; set; } = null;
 

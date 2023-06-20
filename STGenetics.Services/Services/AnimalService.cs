@@ -29,7 +29,7 @@ namespace STGenetics.Application.Services
                 Name = newAnimal.Name,
                 Breed = newAnimal.Breed,
                 Price = newAnimal.Price,
-                Sex = newAnimal.Sex,
+                Sex = newAnimal.Sex.ToUpper(),
                 Status = newAnimal.Status,
             };
 
@@ -39,7 +39,18 @@ namespace STGenetics.Application.Services
         }
 
 
-        public async Task<bool> UpdateAnimalAsync(int Id, AnimalUpdate animal) {
+        public async Task<bool> UpdateAnimalAsync(int Id, AnimalUpdateDto UpdateAnimal) {
+
+            var animal = new AnimalUpdate()
+            {
+                BirthDate = UpdateAnimal.BirthDate ?? new DateTime(),
+                Name = UpdateAnimal.Name ?? "",
+                Breed = UpdateAnimal.Breed ?? "",
+                Price = UpdateAnimal.Price ?? new decimal(),
+                Sex = UpdateAnimal.Sex.ToUpper() ?? "",
+                Status = UpdateAnimal.Status ,
+            };
+
 
             if (!AnimalValidation(animal) || Id <= 0) return false;
 
@@ -85,13 +96,15 @@ namespace STGenetics.Application.Services
 
         public async Task<AnimalsFilteredDto> GetAnimalsFilteredAsync(int? AnimalId, string? Name, string? Sex, bool? Status, int? PageSize, int? Page) 
         {
-            var filter = new AnimalFilterDto
+            var filter = new AnimalFilterDto()
             {
                 AnimalId = AnimalId,
                 Name = Name,
                 Sex = Sex,
                 Status = Status,
             };
+
+            if (filter.Sex is not null) filter.Sex = filter.Sex.ToUpper();
 
             if (Page is not null && Page > 0)
                 filter.Page = Page;
@@ -111,18 +124,28 @@ namespace STGenetics.Application.Services
             var count = await countTask;
             var animals = await filteredAnimalsTask;
 
-            return new AnimalsFilteredDto { 
-                Animals = animals.Select(o => new AnimalDto
-                {
-                    AnimalId = o.AnimalId,
-                    Name = o.Name,
-                    Sex = o.Sex,
-                    Status = o.Status,
-                    BirthDate = o.BirthDate,
-                    Breed = o.Breed,
-                    Price = o.Price,
+            var animalsDto = new List<AnimalDto>();
 
-                }).ToList(),
+            if (animals is not null) 
+            {
+                animalsDto = animals.Select(
+                    o => new AnimalDto
+                    {
+                        AnimalId = o.AnimalId,
+                        Name = o.Name,
+                        Sex = o.Sex,
+                        Status = o.Status,
+                        BirthDate = o.BirthDate,
+                        Breed = o.Breed,
+                        Price = o.Price,
+
+                    }).ToList();
+            }
+
+
+
+            return new AnimalsFilteredDto { 
+                Animals =  animalsDto,
                 Page = (int)filter.Page!,
                 Quantity = count            
             };
@@ -139,7 +162,7 @@ namespace STGenetics.Application.Services
         {
             Animal.ThrowIfNull();   
 
-            if (Animal.BirthDate.Date.Year < 1990) return false;
+            if (Animal.BirthDate != default && Animal.BirthDate.Date.Year < 1990) return false;
 
             if (Animal.Price < 0) return false;
 

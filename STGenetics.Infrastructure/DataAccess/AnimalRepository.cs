@@ -57,7 +57,7 @@ namespace STGenetics.Infrastructure.DataAccess
 
             using var connection = _context.CreateConnection();
 
-            var affectedRows = await connection.ExecuteAsync(sqlQuery, Id);
+            var affectedRows = await connection.ExecuteAsync(sqlQuery, new { Id });
 
             return affectedRows > 0 ;             
             

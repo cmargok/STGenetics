@@ -6,7 +6,8 @@
         InternalServerError,
         NoContent,
         NotFound,
-        CannotBeCreated
+        CannotBeCreated,
+        BadRequest
 
     }
 }

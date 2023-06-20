@@ -34,7 +34,7 @@ namespace STGenetics.API.Controllers
         /// <returns>Token</returns>
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(typeof(Problem), 500)]
-        [HttpPost]
+        [HttpPost("GetToken")]
         public async Task<IActionResult> GenerateToken(User user)
         {
             if(_tokenService.ValidateUser(user)) return Unauthorized();
