@@ -13,4 +13,5 @@ namespace STGenetics.Domain.Tools
             };
         }
     }
+    public interface In
 }
